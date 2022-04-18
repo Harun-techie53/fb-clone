@@ -1,0 +1,50 @@
+.createPost {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 5px 7px -7px rgba(0, 0, 0, 0.75);
+}
+
+.createPost__top {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eff2f5;
+    padding: 15px;
+}
+
+.createPost__top > form {
+    flex: 1;
+    display: flex;
+}
+
+.createPost__top > form > input {
+    outline-width: 0;
+    border: none;
+    padding: 20px;
+    margin: 0 10px;
+    border-radius: 999px;
+    background-color: #eff2f5;
+    width: 100%;
+}
+
+.createPost__bottom {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+.createPost__option {
+    display: flex;
+    align-items: center;
+    padding: 10px 0 10px 0;
+    cursor: pointer;
+}
+
+.createPost__option > h4 {
+    margin-left: 5px;
+}
+
+.createPost__option:hover > h4 {
+    color: #2e81f4;
+}
