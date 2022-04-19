@@ -23,8 +23,13 @@
     margin-left: 15px;
 }
 
+.post__topInfo > small {
+    color: gray;
+}
+
 .post__middle > p {
     padding: 5px 15px 15px 15px;
+    font-size: large;
 }
 
 .post__middle > img {
@@ -38,6 +43,7 @@
 .post__bottom > p {
     border-bottom: 2px solid #ccc;
     padding-bottom: 5px;
+    font-weight: 700;
 }
 
 .post__utils {
@@ -70,4 +76,14 @@
 .post__option > .MuiSvgIcon-root {
     color: gray;
     margin-right: 5px;
+}
+
+.post__middle > form > input {
+    outline-width: 0;
+    border: none;
+    padding: 20px;
+    margin: 0 10px;
+    border-radius: 999px;
+    background-color: #eff2f5;
+    width: 85%;
 }

@@ -1,11 +1,23 @@
 import React, {useState} from 'react';
-import { Home, Bookmark, HowToReg } from '@mui/icons-material';
+import { Home, Bookmark, HowToReg, Logout } from '@mui/icons-material';
 import { Avatar } from "@mui/material";
 import { Link } from 'react-router-dom';
 import LoginRegistration from '../LoginRegistration';
+import { useSelector, useDispatch } from 'react-redux';
+import { signOutWithGoogle } from '../../actions/authAction';
+import AlertSnackbar from '../../utils';
 import "./Header.css";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
+    const [openSignUpSnackbar, setOpenSignUpSnackbar] = useState(false);
+    const [openSignInSnackbar, setOpenSignInSnackbar] = useState(false);
+    const [openLogOutSnackbar, setOpenLogOutSnackbar] = useState(false);
+    const user = auth.user ? auth.user : null;
+    const userInfo = auth.userInfo ? auth.userInfo : null;
+    const isSignedIn = auth.isSignedIn;
+    const isLoading = auth.isLoading;
     const [ openModal, setOpenModal ] = useState(false);
     const [ active, setActive ] = useState({
         isHome: true,
@@ -50,27 +62,82 @@ const Header = () => {
         </div>
 
         <div className="header__right">
-            <div className="header__info">
-                <Avatar/>
-                <h4>
-                    harun_ur
-                </h4>
-            </div>
-            <div 
-                className="header__auth"
-                onClick={() => setOpenModal(true)}
-            >
-                <div className="header__authIcon">
-                    <HowToReg fontSize='large'/>
+            {
+                isSignedIn &&
+                <div className="header__info">
+                    <Avatar src={user?.photoURL}/>
+                    <h4>
+                        {user?.displayName ? user?.displayName : userInfo?.fullName}
+                    </h4>
                 </div>
-                <h4>
-                    Sign Up
-                </h4>
-            </div>
+            }
+    
+            {
+                !isSignedIn ? (
+                    <div 
+                        className="header__auth"
+                        onClick={() => setOpenModal(true)}
+                    >
+                        <div className="header__authIcon">
+                            <HowToReg 
+                                fontSize='medium'
+                                style={{
+                                    color: "dodgerblue"
+                                }}
+                            />
+                        </div>
+                        <h4>
+                            SIGN UP
+                        </h4>
+                    </div>
+                ) : (
+                    <div 
+                        className="header__auth"
+                        onClick={() => {
+                            dispatch(signOutWithGoogle())
+                            setOpenLogOutSnackbar(true);
+                        }}
+                    >
+                        <div className="header__authIcon">
+                            <Logout 
+                                fontSize='medium'
+                                style={{
+                                    color: "orange"
+                                }}
+                            />
+                        </div>
+                        <h4>
+                            LOG OUT
+                        </h4>
+                    </div>
+                )
+            }
         </div>
         <LoginRegistration
             openModal={openModal}
             setOpenModal={setOpenModal}
+            setOpenSignUpSnackbar={setOpenSignUpSnackbar}
+            setOpenSignInSnackbar={setOpenSignInSnackbar}
+            isSignedIn={isSignedIn}
+            isLoading={isLoading}
+        />
+        <AlertSnackbar
+            open={openSignUpSnackbar}
+            setOpen={setOpenSignUpSnackbar}
+            type="success"
+            message="Registered Successfully"
+        />
+        <AlertSnackbar
+            open={openSignInSnackbar}
+            setOpen={setOpenSignInSnackbar}
+            type="success"
+            message="Logged In Successfully"
+        />
+        <AlertSnackbar
+            open={openLogOutSnackbar}
+            setOpen={setOpenLogOutSnackbar}
+            type="error"
+            message="Logged Out Successfully"
         />
     </div>
   )

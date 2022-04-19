@@ -83,10 +83,17 @@
     cursor: pointer;
 }
 
-.header__authIcon > .MuiSvgIcon-root {
-    color: gray;
+.header__authIcon {
+    display:flex;
+    align-items: center;
 }
 
-/* .header__auth > h4 {
-    margin-left: 5px;
-} */
+.header__authIcon > .MuiSvgIcon-root {
+    color: gray;
+    margin-right: 5px;
+}
+
+.header__auth > h4 {
+    color: rgb(89, 87, 87);
+    font-weight: 750;
+}
